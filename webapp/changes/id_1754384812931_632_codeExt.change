@@ -1,0 +1,22 @@
+{
+  "changeType": "codeExt",
+  "reference": "customer.app.managebp",
+  "namespace": "apps/customer.app.managebp/changes/",
+  "projectId": "customer.app.managebp",
+  "moduleName": "customer/app/managebp/changes/coding/addressValidation",
+  "support": {
+    "generator": "rta.service.ControllerExtension"
+  },
+  "originalLanguage": "EN",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "fileName": "id_1754384812931_632_codeExt",
+  "content": {
+    "codeRef": "coding/addressValidation.js"
+  },
+  "texts": {},
+  "selector": {
+    "controllerName": "sap.suite.ui.generic.template.ObjectPage.view.Details"
+  },
+  "creation": "2025-08-05T09:06:52.933Z"
+}

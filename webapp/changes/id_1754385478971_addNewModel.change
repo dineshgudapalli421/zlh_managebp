@@ -1,0 +1,29 @@
+{
+  "fileName": "id_1754385478971_addNewModel",
+  "namespace": "apps/mdm.md.businesspartner.manage/appVariants/customer.app.managebp/changes",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "creation": "2025-08-05T09:17:58.971Z",
+  "packageName": "$TMP",
+  "reference": "customer.app.managebp",
+  "support": {
+    "generator": "@sap-ux/adp-tooling"
+  },
+  "changeType": "appdescr_ui5_addNewModel",
+  "content": {
+    "dataSource": {
+      "customer.ZCE_STREETSWEEPER_SRV": {
+        "uri": "/sap/opu/odata/SAP/ZCE_STREETSWEEPER_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "model": {
+      "customer.oData": {
+        "dataSource": "customer.ZCE_STREETSWEEPER_SRV"
+      }
+    }
+  }
+}
