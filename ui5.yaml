@@ -28,11 +28,11 @@ server:
           target:
             client: '200'
             url: http://sapsdvapp.aws.londonhydro.cloud:8000/
-          ignoreCertErrors: false
+          ignoreCertErrors: true
     - name: fiori-tools-proxy
       afterMiddleware: fiori-tools-preview
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
           - client: '200'
             url: http://sapsdvapp.aws.londonhydro.cloud:8000/
