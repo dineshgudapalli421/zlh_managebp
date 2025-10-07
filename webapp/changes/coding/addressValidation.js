@@ -17,6 +17,7 @@ sap.ui.define(
         // ,OverrideExecution
     ) {
         'use strict';
+        var sTableId;
         return ControllerExtension.extend("customer.app.managebp.addressValidation", {
             override: {
                 beforeSaveExtension: function () {
@@ -81,12 +82,13 @@ sap.ui.define(
                                 debugger;
                                 let oProposed = response.AddressValidation.Proposed;
                                 oProposed = oProposed.replaceAll('<br>', '\n');
-                                var sTableId = "dynamicTable_" + new Date().getTime();
+                                sTableId = "dynamicTable_" + new Date().getTime();
                                 var oTable = new sap.m.Table(sTableId, {
-                                    mode: sap.m.ListMode.Single,
-                                    inset: false,
+                                    mode: sap.m.ListMode.SingleSelectLeft,
+                                    inset: true,
                                     showOverlay: false,
-                                    headerDesign: sap.m.ListHeaderDesign.Standard
+                                    headerDesign: sap.m.ListHeaderDesign.Standard,
+                                    itemPress: "onSelectionChange"
                                 });
 
                                 var oModel = new sap.ui.model.json.JSONModel();
@@ -119,7 +121,11 @@ sap.ui.define(
                                     ]
                                 }));
                                 var oDialog = new sap.m.Dialog({
-                                    title: "Information", //Available Documents
+                                    title: "Information",
+                                    ok: function (oEvent) {
+                                        debugger;
+                                        var oSelectedItem = oEvent.getParameter("listItem");
+                                    },
                                     closed: function (oEvent) {
                                         oTable.destroy();
                                         oEvent.getSource().destroy();
@@ -128,7 +134,75 @@ sap.ui.define(
                                 });
 
                                 oDialog.addContent(oTable);
-                                oDialog.addButton(new sap.m.Button({ text: "Ok", press: function () { oDialog.close(); } }));				//Button for printing
+                                oDialog.addButton(new sap.m.Button({
+                                    text: "Confirm", press: function (oEvent) {
+                                        debugger;
+                                        var oTable1 = sap.ui.getCore().byId(sTableId);
+                                        var oSelectedItem = oTable1.getSelectedItems();
+                                        if (oSelectedItem.length > 0) {
+                                            var oCorrection = oSelectedItem[0].getBindingContext().getModel().getData().rows[0].col2;
+                                            if (oCorrection.length > 0) {
+                                                if (oCorrection.includes("#") === true) {
+                                                    debugger;
+                                                    var objFinal = {};
+                                                    var objParameters = oCorrection.split('#');
+                                                    objParameters.forEach(function (sfield) {
+                                                        var oFields = sfield.split(':');
+                                                        if (oFields.length === 2) {
+                                                            var sKey = oFields[0];
+                                                            var sValue = oFields[1];
+                                                            objFinal[sKey.trim()] = sValue.trim();
+                                                        }
+                                                    });
+                                                    if (objFinal.hasOwnProperty("Postal Code") === true) {
+                                                        let sPostalCode = objFinal["Postal Code"];
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::PostalCode::Field").setValue(sPostalCode);
+                                                    }
+                                                    if (objFinal.hasOwnProperty("Province") === true) {
+                                                        let sProvince = objFinal["Province"];
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress2::Region::Field-input").setValue(sProvince);
+                                                    }
+                                                    if (objFinal.hasOwnProperty("StreetName") === true) {
+                                                        var oStreetName = objFinal["StreetName"];
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
+                                                    }
+                                                    if (objFinal.hasOwnProperty("City") === true) {
+                                                        var sCity = objFinal["City"];
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierCityName::Field").setValue(sCity);
+                                                    }
+                                                }
+                                                else if (oCorrection.includes("StreetName") === true) {
+                                                    var oStreetName = oCorrection.substring(12, oCorrection.length);
+                                                    sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
+                                                }
+                                                else if (oCorrection.includes("Postal Code") === true) {
+                                                    let sPostalCode = oCorrection.substring(13, oCorrection.length);
+                                                    sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::PostalCode::Field").setValue(sPostalCode);
+                                                }
+                                                else if (oCorrection.includes("Province") === true) {
+                                                    let sProvince = oCorrection.substring(11, oCorrection.length);
+                                                    sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress2::Region::Field-input").setValue(sProvince);
+                                                }
+                                                else if (oCorrection.includes("City") === true) {
+                                                    var sCity = oCorrection.substring(7, oCorrection.length);
+                                                    sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierCityName::Field").setValue(sCity);
+                                                }
+                                                oTable.destroy();
+                                                oEvent.getSource().destroy();
+                                                oDialog.close();
+                                                resolve;
+                                            } else {
+                                                MessageBox.error("Correction field should not be empty..");
+                                            }
+
+                                        }
+                                        else {
+                                            MessageBox.error("Please select row..")
+                                        }
+
+                                        //var oSelectedItem = oEvent.getParameter("listItem");
+                                    }
+                                }));				//Button for printing
                                 oDialog.addButton(new sap.m.Button({ text: "Cancel", press: function () { oDialog.close(); } }));	//Button for closing Dialog
                                 oDialog.open();
                                 resolve;
@@ -141,6 +215,11 @@ sap.ui.define(
                         });
                         // }
                     });
+                },
+                onSelectionChange: function (oEvent) {
+                    debugger;
+                    var oSelectedItem = oEvent.getParameter("listItem"); // For sap.m.Table
+                    // ... proceed to get data from oSelectedItem ...
                 }
             }
 
