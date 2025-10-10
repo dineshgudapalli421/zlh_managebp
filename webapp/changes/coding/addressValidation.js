@@ -20,6 +20,11 @@ sap.ui.define(
         var sTableId;
         return ControllerExtension.extend("customer.app.managebp.addressValidation", {
             override: {
+                onInit: function () {
+                    debugger;
+
+                    var oInput = this.byId("to_BusinessPartnerAddrFilter::CustomerSupplierCityName::Field");
+                },
                 beforeSaveExtension: function () {
                     let manageBPStreet = sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field");
                     let manageBPPostalCode = sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::PostalCode::Field");
@@ -123,8 +128,6 @@ sap.ui.define(
                                 var oDialog = new sap.m.Dialog({
                                     title: "Information",
                                     ok: function (oEvent) {
-                                        debugger;
-                                        var oSelectedItem = oEvent.getParameter("listItem");
                                     },
                                     closed: function (oEvent) {
                                         oTable.destroy();
@@ -164,6 +167,13 @@ sap.ui.define(
                                                     }
                                                     if (objFinal.hasOwnProperty("StreetName") === true) {
                                                         var oStreetName = objFinal["StreetName"];
+                                                        if (oStreetName.includes("BOX") === true) {
+                                                            oStreetName = oStreetName.trim();
+                                                            var objStreetName = oStreetName.split(' ');
+                                                            var sBox = oStreetName.includes("PO BOX") === true ? objStreetName[2] : objStreetName[1];
+                                                            var sSTN = oStreetName.includes("PO BOX") === true ? objStreetName[4] : objStreetName[3];
+                                                            sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::POBox::Field-input").setValue(sBox.trim());
+                                                        }
                                                         sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
                                                     }
                                                     if (objFinal.hasOwnProperty("City") === true) {
@@ -173,6 +183,14 @@ sap.ui.define(
                                                 }
                                                 else if (oCorrection.includes("StreetName") === true) {
                                                     var oStreetName = oCorrection.substring(12, oCorrection.length);
+                                                    //var oStreetName = objFinal["StreetName"];
+                                                    if (oStreetName.includes("BOX") === true) {
+                                                        oStreetName = oStreetName.trim();
+                                                        var objStreetName = oStreetName.split(' ');
+                                                        var sBox = oStreetName.includes("PO BOX") === true ? objStreetName[2] : objStreetName[1];
+                                                        var sSTN = oStreetName.includes("PO BOX") === true ? objStreetName[4] : objStreetName[3];
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::POBox::Field-input").setValue(sBox.trim());
+                                                    }
                                                     sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
                                                 }
                                                 else if (oCorrection.includes("Postal Code") === true) {
@@ -190,7 +208,7 @@ sap.ui.define(
                                                 oTable.destroy();
                                                 oEvent.getSource().destroy();
                                                 oDialog.close();
-                                                resolve;
+                                                //resolve();
                                             } else {
                                                 MessageBox.error("Correction field should not be empty..");
                                             }
@@ -200,26 +218,24 @@ sap.ui.define(
                                             MessageBox.error("Please select row..")
                                         }
 
-                                        //var oSelectedItem = oEvent.getParameter("listItem");
                                     }
-                                }));				//Button for printing
-                                oDialog.addButton(new sap.m.Button({ text: "Cancel", press: function () { oDialog.close(); } }));	//Button for closing Dialog
+                                }));
+                                oDialog.addButton(new sap.m.Button({
+                                    text: "Cancel", press: function () {
+                                        oDialog.close();
+                                        //resolve();
+                                    }
+                                }));	//Button for closing Dialog
                                 oDialog.open();
-                                resolve;
                             },
                             error: (oError) => {
                                 debugger;
                                 MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                                reject;
+                                reject();
                             }
                         });
                         // }
                     });
-                },
-                onSelectionChange: function (oEvent) {
-                    debugger;
-                    var oSelectedItem = oEvent.getParameter("listItem"); // For sap.m.Table
-                    // ... proceed to get data from oSelectedItem ...
                 }
             }
 

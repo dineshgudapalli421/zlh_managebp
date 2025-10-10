@@ -1,0 +1,8 @@
+<!-- Use stable and unique IDs!-->
+<core:FragmentDefinition xmlns:core='sap.ui.core' xmlns='sap.m'>
+    <!--  add your xml here -->
+     <VBox id="vBoxStation">
+         <Label id="lblStation" text="Station Name"></Label>
+         <Text id="txtStation"></Text>
+    </VBox>
+</core:FragmentDefinition>

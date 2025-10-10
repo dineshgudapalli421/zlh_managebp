@@ -1,0 +1,30 @@
+{
+  "changeType": "addXML",
+  "reference": "customer.app.managebp",
+  "namespace": "apps/customer.app.managebp/changes/",
+  "projectId": "customer.app.managebp",
+  "packageName": "$TMP",
+  "moduleName": "customer/app/managebp/changes/fragments/station.fragment.xml",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "command": "addXML",
+    "sapui5Version": "1.120.0"
+  },
+  "originalLanguage": "EN",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "fileName": "id_1760011982990_617_addXML",
+  "content": {
+    "targetAggregation": "groups",
+    "index": 4,
+    "fragmentPath": "fragments/station.fragment.xml"
+  },
+  "texts": {},
+  "selector": {
+    "id": "mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--StandardAddress::Form",
+    "idIsLocal": false
+  },
+  "dependentSelector": {},
+  "jsOnly": false,
+  "creation": "2025-10-09T12:13:14.551Z"
+}
