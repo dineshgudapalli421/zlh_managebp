@@ -208,7 +208,7 @@ sap.ui.define(
                                                 oTable.destroy();
                                                 oEvent.getSource().destroy();
                                                 oDialog.close();
-                                                //resolve();
+                                                resolve();
                                             } else {
                                                 MessageBox.error("Correction field should not be empty..");
                                             }
@@ -223,7 +223,7 @@ sap.ui.define(
                                 oDialog.addButton(new sap.m.Button({
                                     text: "Cancel", press: function () {
                                         oDialog.close();
-                                        //resolve();
+                                        resolve();
                                     }
                                 }));	//Button for closing Dialog
                                 oDialog.open();
