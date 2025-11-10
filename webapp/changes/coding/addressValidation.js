@@ -173,6 +173,7 @@ sap.ui.define(
                                                             var sBox = oStreetName.includes("PO BOX") === true ? objStreetName[2] : objStreetName[1];
                                                             var sSTN = oStreetName.includes("PO BOX") === true ? objStreetName[4] : objStreetName[3];
                                                             sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::POBox::Field-input").setValue(sBox.trim());
+                                                            sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::FormGroup_C_BusinessPartnerAddressType_POBoxLobbyName-element0-input").setValue(sSTN.trim());
                                                         }
                                                         sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
                                                     }
@@ -190,6 +191,7 @@ sap.ui.define(
                                                         var sBox = oStreetName.includes("PO BOX") === true ? objStreetName[2] : objStreetName[1];
                                                         var sSTN = oStreetName.includes("PO BOX") === true ? objStreetName[4] : objStreetName[3];
                                                         sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::POBox::Field-input").setValue(sBox.trim());
+                                                        sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--to_BusinessPartnerAddrFilter::com.sap.vocabularies.UI.v1.FieldGroup::stdaddress3::FormGroup_C_BusinessPartnerAddressType_POBoxLobbyName-element0-input").setValue(sSTN.trim());
                                                     }
                                                     sap.ui.getCore().byId("mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--com.sap.vocabularies.UI.v1.FieldGroup::stdaddress1::to_BusinessPartnerAddrFilter::CustomerSupplierStreetName::Field").setValue(oStreetName.trim());
                                                 }
