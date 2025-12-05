@@ -1,0 +1,30 @@
+{
+  "changeType": "addXML",
+  "reference": "customer.app.managebp",
+  "namespace": "apps/customer.app.managebp/changes/",
+  "projectId": "customer.app.managebp",
+  "packageName": "$TMP",
+  "moduleName": "customer/app/managebp/changes/fragments/validateButton.fragment.xml",
+  "support": {
+    "generator": "@sap-ux/control-property-editor",
+    "command": "addXML",
+    "sapui5Version": "1.120.0"
+  },
+  "originalLanguage": "EN",
+  "layer": "CUSTOMER_BASE",
+  "fileType": "change",
+  "fileName": "id_1763385092722_632_addXML",
+  "content": {
+    "targetAggregation": "content",
+    "index": 10,
+    "fragmentPath": "fragments/validateButton.fragment.xml"
+  },
+  "texts": {},
+  "selector": {
+    "id": "mdm.md.businesspartner.manage::sap.suite.ui.generic.template.ObjectPage.view.Details::C_BusinessPartner--template::ObjectPage::FooterToolbar",
+    "idIsLocal": false
+  },
+  "dependentSelector": {},
+  "jsOnly": false,
+  "creation": "2025-11-17T13:11:42.480Z"
+}

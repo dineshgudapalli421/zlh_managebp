@@ -1,0 +1,6 @@
+<!-- Use stable and unique IDs!-->
+<core:FragmentDefinition xmlns:core='sap.ui.core' xmlns='sap.m'>
+    <!--  add your xml here -->
+    <Button text="Validate Address"  id="btn-0cb443dd" 
+    press=".extension.customer.app.managebp.addressValidation.onValidate"></Button>
+</core:FragmentDefinition>
